@@ -68,4 +68,6 @@ Read `DEPLOY_TO_YOUR_DOMAIN.md` for the full guide.
 
 ## License
 
-MIT
+This project is private and not licensed for public use.
+
+
