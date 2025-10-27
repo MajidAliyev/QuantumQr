@@ -8,11 +8,12 @@ I built this because I wanted QR codes that I could update without printing new 
 
 **Dynamic QR Codes** - The main feature. Print once, update the URL forever.
 
-You create a QR code that points to a short URL like `your-domain.com/redirect/abc123/`. 
-When someone scans it, they get redirected to wherever you set it. The best part? 
+You create a QR code that points to a short URL like `your-domain.com/redirect/abc123/`.
+When someone scans it, they get redirected to wherever you set it. The best part?
 You can change where it points anytime without making a new QR code.
 
 **Also includes**:
+
 - Custom colors and logos on QR codes
 - Track who scans them (devices, browsers, locations)
 - See charts of scan activity over time
@@ -50,6 +51,7 @@ That's it! Open http://localhost:8000 in your browser.
 **Static QR codes**: Put in text/URL, get a QR code. Simple.
 
 **Dynamic QR codes**: This is where it gets interesting.
+
 1. Create a dynamic QR code with a destination URL
 2. You get a short URL like `yoursite.com/redirect/abc123/`
 3. Share that short URL or print the QR code
