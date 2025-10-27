@@ -1,133 +1,69 @@
-# QuantumQR - Dynamic QR Code Generator
+# QuantumQR
 
-A full-stack web application for generating dynamic QR codes with analytics, built with Django, HTMX, and Tailwind CSS.
+Generate dynamic QR codes with instant URL updates, scan analytics, and zero JavaScript.
 
-## Features
+I built this because I wanted QR codes that I could update without printing new ones. The URL changes, but the QR code image stays the same.
 
-- **Zero JavaScript Core Logic**: All interactivity handled via HTMX
-- **Custom QR Code Generation**: Full color control, logo insertion, multiple formats
-- **Dynamic QR Codes**: Update destination URLs without changing the QR image
-- **Scan Analytics**: Track scans with device, browser, and geographic insights
-- **Server-Rendered Charts**: Visualization using Matplotlib
-- **Bulk Processing**: CSV upload with background task processing
-- **Modern UI**: Beautiful interface built with Tailwind CSS
+## What It Does
 
-## Tech Stack
+**Dynamic QR Codes** - The main feature. Print once, update the URL forever.
 
-- **Backend**: Django 4.2
-- **Frontend**: Tailwind CSS + HTMX (zero JavaScript for core logic)
-- **QR Code Generation**: qrcode + Pillow
-- **Export Formats**: PNG, SVG, PDF
-- **Background Tasks**: Celery + Redis
-- **Analytics**: Matplotlib
-- **Database**: SQLite (dev) / PostgreSQL (production)
+You create a QR code that points to a short URL like `your-domain.com/redirect/abc123/`. 
+When someone scans it, they get redirected to wherever you set it. The best part? 
+You can change where it points anytime without making a new QR code.
 
-## Installation
+**Also includes**:
+- Custom colors and logos on QR codes
+- Track who scans them (devices, browsers, locations)
+- See charts of scan activity over time
+- Bulk generate QR codes from CSV files
+- Download in PNG, SVG, or PDF
 
-1. Create and activate virtual environment:
+## What I Built It With
 
-```bash
-python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
-```
+- Django for the backend
+- HTMX for the frontend (no JavaScript needed)
+- Tailwind CSS for styling
+- Matplotlib for analytics charts
+- Celery handles bulk processing in the background
 
-2. Install dependencies:
+## Quick Start
 
 ```bash
+# Install dependencies
 pip install -r requirements.txt
-```
 
-3. Run migrations:
-
-```bash
-python manage.py makemigrations
+# Setup database
 python manage.py migrate
-```
 
-4. Create superuser:
-
-```bash
+# Create admin user
 python manage.py createsuperuser
-```
 
-5. Start Redis (required for Celery):
-
-```bash
-redis-server
-```
-
-6. Start Celery worker (in a new terminal):
-
-```bash
-celery -A quantumqr worker --loglevel=info
-```
-
-7. Start Django development server:
-
-```bash
+# Run the server
 python manage.py runserver
 ```
 
-## Usage
+That's it! Open http://localhost:8000 in your browser.
 
-### Creating Static QR Codes
+## How It Works
 
-1. Navigate to "Create QR Code"
-2. Enter your data (URL, text, etc.)
-3. Customize colors, error correction, and size
-4. Optionally upload a logo
-5. Download in PNG, SVG, or PDF format
+**Static QR codes**: Put in text/URL, get a QR code. Simple.
 
-### Creating Dynamic QR Codes
+**Dynamic QR codes**: This is where it gets interesting.
+1. Create a dynamic QR code with a destination URL
+2. You get a short URL like `yoursite.com/redirect/abc123/`
+3. Share that short URL or print the QR code
+4. Anytime you want, log in and change where it points
+5. The QR code image never changes, but the destination does
 
-1. Navigate to "Create QR Code"
-2. Select "Dynamic" type
-3. Enter the destination URL
-4. Generate and share the short URL
-5. Update destination URL anytime without reprinting
+This means you can print menus, business cards, posters, and update them instantly without reprinting.
 
-### Bulk Processing
+## Deployment
 
-1. Prepare a CSV file with columns: `name,data`
-2. Navigate to "Bulk Upload"
-3. Upload CSV file
-4. Monitor progress in "Bulk Jobs"
-5. Download ZIP file when complete
+Deploy to Render, Railway, or Fly.io. All the configs are already in the repo.
 
-## Project Structure
-
-```
-quantumqr/
-├── quantumqr/          # Django project settings
-├── qrgen/              # Main application
-│   ├── models.py       # Database models
-│   ├── views.py        # View logic
-│   ├── forms.py        # Form definitions
-│   ├── utils.py        # QR code generation utilities
-│   ├── tasks.py        # Celery background tasks
-│   └── urls.py         # URL routing
-├── templates/          # HTML templates
-├── static/             # Static files
-└── media/              # User uploads
-```
-
-## API Endpoints
-
-- `/` - Home page
-- `/dashboard/` - User dashboard
-- `/create/` - Create QR code
-- `/qr/<id>/` - View QR code details
-- `/qr/<id>/download/<format>/` - Download QR code
-- `/qr/<id>/analytics/` - View scan analytics
-- `/redirect/<short_url>/` - Redirect dynamic QR codes
-- `/bulk-upload/` - Bulk CSV upload
-- `/bulk-jobs/` - View bulk jobs
-
-## HTMX Endpoints
-
-- `/qr/preview/` - Live QR code preview
-- `/qr/<id>/update-url/` - Update dynamic URL
+Read `DEPLOY_TO_YOUR_DOMAIN.md` for the full guide.
 
 ## License
 
-MIT License
+MIT
