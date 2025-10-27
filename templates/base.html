@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}QuantumQR - Dynamic QR Code Generator{% endblock %}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/htmx.org@1.9.10"></script>
+    <style>
+        [x-cloak] { display: none !important; }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <nav class="bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <div class="flex items-center space-x-4">
+                    <a href="{% url 'index' %}" class="text-2xl font-bold">QuantumQR</a>
+                </div>
+                <div class="flex items-center space-x-4">
+                    {% if user.is_authenticated %}
+                        <a href="{% url 'dashboard' %}" class="hover:bg-blue-700 px-3 py-2 rounded transition">Dashboard</a>
+                        <a href="{% url 'create-qr' %}" class="hover:bg-blue-700 px-3 py-2 rounded transition">Create QR</a>
+                        <a href="{% url 'bulk-upload' %}" class="hover:bg-blue-700 px-3 py-2 rounded transition">Bulk Upload</a>
+                        <a href="{% url 'logout' %}" class="hover:bg-blue-700 px-3 py-2 rounded transition">Logout</a>
+                    {% else %}
+                        <a href="{% url 'login' %}" class="hover:bg-blue-700 px-3 py-2 rounded transition">Login</a>
+                        <a href="{% url 'register' %}" class="bg-white text-blue-600 hover:bg-gray-100 px-4 py-2 rounded transition">Register</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        {% if messages %}
+            <div class="mb-4">
+                {% for message in messages %}
+                    <div class="bg-{{ message.tags }}-100 border border-{{ message.tags }}-400 text-{{ message.tags }}-700 px-4 py-3 rounded relative" role="alert">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="bg-gray-800 text-white mt-16 py-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <p>&copy; 2024 QuantumQR. Built with Django, HTMX, and Tailwind CSS.</p>
+        </div>
+    </footer>
+</body>
+</html>
+

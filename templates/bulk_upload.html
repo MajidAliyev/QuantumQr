@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block title %}Bulk Upload - QuantumQR{% endblock %}
+
+{% block content %}
+<h1 class="text-3xl font-bold mb-6">Bulk Upload</h1>
+
+<div class="bg-white p-6 rounded-lg shadow-lg max-w-2xl mx-auto">
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        
+        <div class="mb-4">
+            <label class="block text-gray-700 text-sm font-bold mb-2">{{ form.csv_file.label }}</label>
+            {{ form.csv_file }}
+            <p class="text-sm text-gray-500 mt-2">
+                CSV format: name,data
+            </p>
+        </div>
+        
+        <div class="grid grid-cols-2 gap-4 mb-4">
+            <div>
+                <label class="block text-gray-700 text-sm font-bold mb-2">{{ form.fill_color.label }}</label>
+                {{ form.fill_color }}
+            </div>
+            
+            <div>
+                <label class="block text-gray-700 text-sm font-bold mb-2">{{ form.back_color.label }}</label>
+                {{ form.back_color }}
+            </div>
+        </div>
+        
+        <button type="submit" 
+                class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-full transition">
+            Upload and Process
+        </button>
+    </form>
+</div>
+
+<div class="mt-8 bg-blue-50 p-6 rounded-lg">
+    <h3 class="text-lg font-bold mb-2">CSV Format</h3>
+    <pre class="bg-white p-4 rounded border border-gray-300">name,data
+Product A,https://example.com/product-a
+Product B,https://example.com/product-b
+Contact,https://example.com/contact</pre>
+</div>
+{% endblock %}
+

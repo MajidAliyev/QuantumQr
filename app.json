@@ -1,0 +1,32 @@
+{
+  "name": "QuantumQR",
+  "description": "Dynamic QR Code Generator with Analytics",
+  "repository": "https://github.com/yourusername/quantumqr",
+  "logo": "https://via.placeholder.com/150",
+  "keywords": ["django", "qr-code", "htmx", "analytics"],
+  "success_url": "/",
+  "env": {
+    "SECRET_KEY": {
+      "generator": "secret"
+    },
+    "DISABLE_COLLECTSTATIC": {
+      "value": "1"
+    }
+  },
+  "formation": {
+    "web": {
+      "quantity": 1
+    }
+  },
+  "addons": [
+    {
+      "plan": "heroku-postgresql:hobby-dev"
+    }
+  ],
+  "buildpacks": [
+    {
+      "url": "heroku/python"
+    }
+  ]
+}
+

@@ -1,0 +1,102 @@
+{% extends 'base.html' %}
+
+{% block title %}Create QR Code - QuantumQR{% endblock %}
+
+{% block content %}
+<h1 class="text-3xl font-bold mb-6">Create QR Code</h1>
+
+<div class="grid md:grid-cols-2 gap-8">
+    <!-- Form -->
+    <div class="bg-white p-6 rounded-lg shadow-lg">
+        <form method="POST" enctype="multipart/form-data" hx-post="{% url 'qr-preview' %}" hx-target="#qr-preview" hx-trigger="input from:form">
+            {% csrf_token %}
+            
+            <div class="mb-4">
+                <label class="block text-gray-700 text-sm font-bold mb-2">{{ form.name.label }}</label>
+                {{ form.name }}
+            </div>
+            
+            <div class="mb-4">
+                <label class="block text-gray-700 text-sm font-bold mb-2">Type</label>
+                <div class="flex space-x-4">
+                    {% for choice in form.qr_type %}
+                        <label class="inline-flex items-center">
+                            {{ choice.tag }}
+                            <span class="ml-2">{{ choice.choice_label }}</span>
+                        </label>
+                    {% endfor %}
+                </div>
+            </div>
+            
+            <div id="static-data" class="mb-4">
+                <label class="block text-gray-700 text-sm font-bold mb-2">Data</label>
+                {{ form.data }}
+            </div>
+            
+            <div id="dynamic-data" class="mb-4" style="display:none;">
+                <label class="block text-gray-700 text-sm font-bold mb-2">Destination URL</label>
+                {{ form.destination_url }}
+            </div>
+            
+            <div class="mb-4">
+                <label class="block text-gray-700 text-sm font-bold mb-2">{{ form.fill_color.label }}</label>
+                {{ form.fill_color }}
+            </div>
+            
+            <div class="mb-4">
+                <label class="block text-gray-700 text-sm font-bold mb-2">{{ form.back_color.label }}</label>
+                {{ form.back_color }}
+            </div>
+            
+            <div class="mb-4">
+                <label class="block text-gray-700 text-sm font-bold mb-2">{{ form.error_correction.label }}</label>
+                {{ form.error_correction }}
+            </div>
+            
+            <div class="mb-4">
+                <label class="block text-gray-700 text-sm font-bold mb-2">{{ form.size.label }}</label>
+                {{ form.size }}
+            </div>
+            
+            <div class="mb-4">
+                <label class="block text-gray-700 text-sm font-bold mb-2">{{ form.logo.label }} (Optional)</label>
+                {{ form.logo }}
+            </div>
+            
+            <button type="submit" 
+                    class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-full transition">
+                Create QR Code
+            </button>
+        </form>
+    </div>
+    
+    <!-- Preview -->
+    <div class="bg-white p-6 rounded-lg shadow-lg">
+        <h3 class="text-xl font-bold mb-4">Live Preview</h3>
+        <div id="qr-preview" class="flex justify-center items-center h-96 border-2 border-dashed border-gray-300 rounded-lg">
+            <p class="text-gray-500">Fill in the form to see preview</p>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const qrTypeInputs = document.querySelectorAll('input[name="qr_type"]');
+        const staticDiv = document.getElementById('static-data');
+        const dynamicDiv = document.getElementById('dynamic-data');
+        
+        qrTypeInputs.forEach(input => {
+            input.addEventListener('change', function() {
+                if (this.value === 'dynamic') {
+                    staticDiv.style.display = 'none';
+                    dynamicDiv.style.display = 'block';
+                } else {
+                    staticDiv.style.display = 'block';
+                    dynamicDiv.style.display = 'none';
+                }
+            });
+        });
+    });
+</script>
+{% endblock %}
+

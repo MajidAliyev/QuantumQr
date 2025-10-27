@@ -1,0 +1,6 @@
+{% if qr_image_data %}
+    <img src="data:image/png;base64,{{ qr_image_data }}" alt="QR Code Preview" class="max-w-full">
+{% else %}
+    <p class="text-gray-500">Fill in the form to see preview</p>
+{% endif %}
+
